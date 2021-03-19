@@ -1,13 +1,14 @@
+import { NavLink, useRouteMatch } from "react-router-dom";
+
 export default function TabTitle() {
+  const { url } = useRouteMatch();
   return (
     <div className="tab-title">
-      <a href="#" className="active">
-        Thông tin tài khoản
-      </a>
-      <a href="#">Khóa học của bạn</a>
-      <a href="#">Dự án đã làm</a>
-      <a href="#">Lịch sử thanh toán</a>
-      <a href="#">Quản lý COIN của tôi</a>
+      <NavLink to={`${url}/info`}>Thông tin tài khoản</NavLink>
+      <NavLink to={`${url}/your-course`}>Khóa học của bạn</NavLink>
+      <NavLink to={`${url}/project`}>Dự án đã làm</NavLink>
+      <NavLink to={`${url}/history-payment`}>Lịch sử thanh toán</NavLink>
+      <NavLink to={`${url}/coin-management`}>Quản lý COIN của tôi</NavLink>
     </div>
   );
 }

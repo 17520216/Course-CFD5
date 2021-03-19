@@ -1,7 +1,7 @@
 export default function Course() {
   return (
     <>
-      <div className="tab3" style={{ display: "none" }}>
+      <div className="tab3">
         <div className="row">
           <CourseItem
             img_course="/img/img7.png"

@@ -1,6 +1,6 @@
 export default function YourCourse() {
   return (
-    <div className="tab2" style={{ display: "none" }}>
+    <div className="tab2">
       <Course
         img_course="/img/img3.png"
         name="Frontend cơ bản"
@@ -8,7 +8,7 @@ export default function YourCourse() {
         time="54 giờ"
         NoVideo="29 video"
         students="30 học viên"
-        rating="40%"
+        rating="40"
       />
       <Course
         img_course="/img/img7.png"
@@ -17,7 +17,7 @@ export default function YourCourse() {
         time="24 giờ"
         NoVideo="21 video"
         students="20 học viên"
-        rating="40%"
+        rating="40"
       />
     </div>
   );
@@ -49,9 +49,9 @@ function Course({ img_course, name, date, time, NoVideo, students, rating }) {
         </div>
         <div className="process">
           <div className="line">
-            <div className="rate" style={{ width: "40%" }} />
+            <div className="rate" style={{ width: { rating } }} />
           </div>
-          {rating}
+          {rating}%
         </div>
         <div className="btn overlay round btn-continue">Tiếp tục học</div>
       </div>

@@ -1,6 +1,6 @@
 export default function CoinManagement() {
   return (
-    <div className="tab5 cointab" style={{ display: "block" }}>
+    <div className="tab5 cointab">
       <div className="coininfo">
         <InfoCoin />
         <ChangeCoin />
