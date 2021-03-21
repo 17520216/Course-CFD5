@@ -1,13 +1,20 @@
 import "../assets/css/custom.css";
 import { NavLink, Link } from "react-router-dom";
+import { useContext, useState } from "react";
+import { GlobalContext } from "../context/GlobalState";
 
 export default function Header() {
+  const { login, visibleLogin, showLogin } = useContext(GlobalContext);
   function openMenu() {
     document.body.classList.toggle("menu-is-show");
   }
   function closeMenu() {
     document.body.classList.remove("menu-is-show");
   }
+  const setShowLogin = () => {
+    showLogin();
+  };
+
   return (
     <>
       <header id="header">
@@ -25,26 +32,37 @@ export default function Header() {
             <h1>CFD</h1>
           </Link>
           <div className="right">
-            <div className="have-login">
-              <div className="account">
-                <a href="#" className="info">
-                  <div className="name">Trần Lê Trọng Nghĩa</div>
-                  <div className="avatar">
-                    <img src="img/avt.png" alt="" />
-                  </div>
-                </a>
+            {login ? (
+              <div className="have-login">
+                <div className="account">
+                  <a href="#" className="info">
+                    <div className="name">Trần Lê Trọng Nghĩa</div>
+                    <div className="avatar">
+                      <img src="/img/avt.png" alt="" />
+                    </div>
+                  </a>
+                </div>
+                <div className="hamberger"></div>
+                <div className="sub">
+                  <NavLink to="/course">Khóa học của tôi</NavLink>
+                  <NavLink to="/profile">Thông tin tài khoản</NavLink>
+                  <NavLink to="/">Đăng xuất</NavLink>
+                </div>
               </div>
-              <div className="hamberger"></div>
-              <div className="sub">
-                <NavLink to="/course">Khóa học của tôi</NavLink>
-                <NavLink to="/profile">Thông tin tài khoản</NavLink>
-                <NavLink to="/login">Đăng xuất</NavLink>
+            ) : (
+              <div class="not-login bg-none">
+                <NavLink
+                  to="/profile"
+                  onClick={setShowLogin}
+                  class="btn-register"
+                >
+                  Đăng nhập
+                </NavLink>
+                <NavLink to="/profile" class="btn main btn-open-login">
+                  Đăng ký
+                </NavLink>
               </div>
-            </div>
-            {/* <div class="not-login bg-none">
-                    <a href="#" class="btn-register">Đăng nhập</a>
-                    <a href="login.html" class="btn main btn-open-login">Đăng ký</a>
-                </div> */}
+            )}
           </div>
         </div>
       </header>

@@ -4,12 +4,12 @@ import Different from "./components/Different";
 import Terminal from "./components/Terminal";
 import Gallery from "./components/Gallery";
 import Action from "./components/Action";
-import Login from "../../components/Login";
 import PopUpVideo from "../../components/PopUpVideo";
+import MainLayout from "../../layout/MainLayout";
 
 export default function Home() {
   return (
-    <>
+    <MainLayout>
       <main className="homepage" id="main">
         <Banner />
         <CourseList />
@@ -17,9 +17,8 @@ export default function Home() {
         <Terminal />
         <Gallery />
         <Action />
-        <Login />
         <PopUpVideo />
       </main>
-    </>
+    </MainLayout>
   );
 }

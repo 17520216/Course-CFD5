@@ -24,21 +24,17 @@
   height: 40px;
   margin: 5px 10px;
 }
+.message {
+  background: #00afab;
+  position: absolute;
+  left: 50%;
+  z-index: 100000;
+}
 .message .show {
   transition-duration: 0.3s;
-  transition-duration: 0.3s;
-  width: 50%;
-  z-index: 100000;
-  position: absolute;
-  background: #00afab;
   left: 50%;
 }
 .message .hide {
   transition-duration: 0.3s;
-  transition-duration: 0.3s;
-  width: 50%;
-  z-index: 100000;
-  position: absolute;
-  background: #00afab;
-  left: 0%;
+  left: 100%;
 }

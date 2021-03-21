@@ -1,9 +1,11 @@
-import { useState } from "react";
-import Home from "../pages/home";
+import { useState, useContext } from "react";
 import ReactDOM from "react-dom";
+import { GlobalContext } from "../context/GlobalState";
 export default function Login() {
-  const [visible, setVisible] = useState("flex");
   const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  const { visibleLogin } = useContext(GlobalContext);
+  const [visible, setVisible] = useState(visibleLogin);
+  const { makeLogin, hideLogin } = useContext(GlobalContext);
   const [form, setForm] = useState({
     password: "",
     phone: "",
@@ -31,11 +33,13 @@ export default function Login() {
       ? (err.email = "Please match the requested format")
       : (err.email = null);
     if (form.password === "nguyenan") {
-      err.password = "success";
+      err.password = "";
     } else {
       err.password = "Please Try Again";
     }
-    if (err.email === null && err.password === "success") {
+    if (err.email === null && err.password === "") {
+      makeLogin();
+      hideLogin();
       setVisible("none");
     }
 
@@ -73,7 +77,7 @@ export default function Login() {
                 placeholder="Email / Số điện thoại"
               />
             )}
-            {!err.password || err.password === "" ? (
+            {!err.password ? (
               <input
                 name="password"
                 value={form.password}

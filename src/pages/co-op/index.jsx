@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import "../../assets/css/custom.css";
 import Head from "../project/component/Head";
 import MessageForm from "../../components/MessageForm";
+import MainLayout from "../../layout/MainLayout";
 export default React.forwardRef(function CoopPage(props, ref) {
   const [form, setForm] = useState({
     name: "",
@@ -60,7 +61,7 @@ export default React.forwardRef(function CoopPage(props, ref) {
     });
   };
   return (
-    <>
+    <MainLayout>
       <main className="register-course" id="main">
         <section className="section-1 wrap container">
           <Head
@@ -187,6 +188,6 @@ export default React.forwardRef(function CoopPage(props, ref) {
           </div>
         </section>
       </main>
-    </>
+    </MainLayout>
   );
 });
