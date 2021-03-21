@@ -1,20 +1,18 @@
 import Head from "./components/Head";
 import Register from "./components/Register";
-import MainLayout from "../../layout/MainLayout";
 
 export default function RegisterPage() {
   return (
-    <MainLayout>
-      <main className="register-course" id="main">
-        <section>
-          <div className="container">
-            <div className="wrap container">
-              <Head />
-              <Register />
-            </div>
+    <main className="register-course" id="main">
+      <section>
+        <div className="container">
+          <div className="wrap container">
+            <Head />
+            <Register />
           </div>
-        </section>
-        {/* <div class="register-success">
+        </div>
+      </section>
+      {/* <div class="register-success">
               <div class="contain">
                   <div class="main-title">đăng ký thành công</div>
                   <p>
@@ -25,7 +23,6 @@ export default function RegisterPage() {
               </div>
               <a href="/" class="btn main rect">về trang chủ</a>
           </div> */}
-      </main>
-    </MainLayout>
+    </main>
   );
 }

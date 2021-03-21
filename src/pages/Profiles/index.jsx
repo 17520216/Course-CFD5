@@ -4,12 +4,11 @@ import TabContent from "./components/TabContent";
 import { useContext } from "react";
 import { GlobalContext } from "../../context/GlobalState";
 import { Redirect } from "react-router-dom";
-import MainLayout from "../../layout/MainLayout";
 
 export default function Profile() {
   const { login } = useContext(GlobalContext);
   return (
-    <MainLayout>
+    <>
       {!login ? (
         <Redirect to="/" />
       ) : (
@@ -30,6 +29,6 @@ export default function Profile() {
           </div>
         </main>
       )}
-    </MainLayout>
+    </>
   );
 }
