@@ -4,7 +4,6 @@ import { GlobalContext } from "../context/GlobalState";
 export default function Login() {
   const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   const { visibleLogin } = useContext(GlobalContext);
-  const [visible, setVisible] = useState(visibleLogin);
   const { makeLogin, hideLogin } = useContext(GlobalContext);
   const [form, setForm] = useState({
     password: "",
@@ -40,7 +39,6 @@ export default function Login() {
     if (err.email === null && err.password === "") {
       makeLogin();
       hideLogin();
-      setVisible("none");
     }
 
     setErr(err);
@@ -49,7 +47,7 @@ export default function Login() {
   };
   return ReactDOM.createPortal(
     <>
-      <div className="popup-form popup-login" style={{ display: visible }}>
+      <div className="popup-form popup-login" style={{ display: visibleLogin }}>
         <div className="wrap">
           {/* login-form */}
           <div className="ct_login" style={{ display: "block" }}>
@@ -146,7 +144,7 @@ export default function Login() {
           </div>
         </div>
       </div>
-      <div className="popup-form popup-login" style={{ display: "none" }}>
+      {/* <div className="popup-form popup-login" style={{ display: "none" }}>
         <div className="wrap">
           <h2 className="title">Đăng ký</h2>
           <div className="btn btn-icon rect white btn-google">
@@ -161,7 +159,7 @@ export default function Login() {
             <img src="img/close-icon.png" alt="" />
           </div>
         </div>
-      </div>
+      </div> */}
     </>,
     document.getElementById("root2")
   );

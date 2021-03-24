@@ -11,6 +11,11 @@ import CourseDetail from "./pages/course-detail";
 import QA from "./pages/QA";
 import Page404 from "./pages/page404";
 import Email from "./pages/email/email";
+import YourCourse from "./pages/Profiles/components/YourCourse";
+import Info from "./pages/Profiles/components/Info";
+import PaymentHistory from "./pages/Profiles/components/PaymentHistory";
+import CoinManagement from "./pages/Profiles/components/CoinManagement";
+import Course from "./pages/Profiles/components/Course";
 
 const routers = [
   {
@@ -35,12 +40,31 @@ const routers = [
         component: CoursePage,
       },
       {
-        path: "/profile",
+        path: "/profile/",
         component: Profile,
-      },
-      {
-        path: "/payment",
-        component: Payment,
+        auth: true,
+        routers: [
+          {
+            path: "your-course",
+            component: YourCourse,
+          },
+          {
+            path: "project",
+            component: Course,
+          },
+          {
+            path: "history-payment",
+            component: PaymentHistory,
+          },
+          {
+            path: "coin-management",
+            component: CoinManagement,
+          },
+          {
+            path: "info",
+            component: Info,
+          },
+        ],
       },
       {
         path: "/course-detail",

@@ -4,16 +4,16 @@ import { useContext, useState } from "react";
 import { GlobalContext } from "../context/GlobalState";
 
 export default function Header() {
-  const { login, visibleLogin, showLogin } = useContext(GlobalContext);
+  const { login, showLogin } = useContext(GlobalContext);
   function openMenu() {
     document.body.classList.toggle("menu-is-show");
   }
   function closeMenu() {
     document.body.classList.remove("menu-is-show");
   }
-  const setShowLogin = () => {
-    showLogin();
-  };
+  // const setShowLogin = () => {
+  //   showLogin();
+  // };
 
   return (
     <>
@@ -50,15 +50,15 @@ export default function Header() {
                 </div>
               </div>
             ) : (
-              <div class="not-login bg-none">
-                <NavLink
-                  to="/profile"
-                  onClick={setShowLogin}
-                  class="btn-register"
-                >
+              <div className="not-login bg-none">
+                <NavLink to="/" onClick={showLogin} class="btn-register">
                   Đăng nhập
                 </NavLink>
-                <NavLink to="/profile" class="btn main btn-open-login">
+                <NavLink
+                  onClick={showLogin}
+                  to="/profile"
+                  className="btn main btn-open-login"
+                >
                   Đăng ký
                 </NavLink>
               </div>
@@ -68,10 +68,6 @@ export default function Header() {
       </header>
       <nav className="nav">
         <ul>
-          <li className="li_login">
-            <a href="#">Đăng nhập</a>
-            <a href="#">Đăng ký</a>
-          </li>
           <li>
             <NavLink exact onClick={closeMenu} to="/">
               Trang chủ

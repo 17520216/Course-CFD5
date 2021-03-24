@@ -5,7 +5,7 @@ import { useContext } from "react";
 import { GlobalContext } from "../../context/GlobalState";
 import { Redirect } from "react-router-dom";
 
-export default function Profile() {
+export default function Profile({ children }) {
   const { login } = useContext(GlobalContext);
   return (
     <>
@@ -21,7 +21,7 @@ export default function Profile() {
                 <div className="container">
                   <div className="tab">
                     <TabTitle />
-                    <TabContent />
+                    <TabContent children={children} />
                   </div>
                 </div>
               </section>

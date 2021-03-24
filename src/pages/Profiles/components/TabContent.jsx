@@ -5,17 +5,20 @@ import PaymentHistory from "./PaymentHistory";
 import CoinManagement from "./CoinManagement";
 import { Switch, Route, useRouteMatch } from "react-router-dom";
 
-export default function TabContent() {
+export default function TabContent({ children }) {
   const { url } = useRouteMatch();
+  console.log(children);
+
   return (
     <div className="tab-content">
       <Switch>
-        <Route path={`${url}/info`} component={Info} />
         <Route path={`${url}/your-course`} component={YourCourse} />
         <Route path={`${url}/project`} component={Course} />
         <Route path={`${url}/history-payment`} component={PaymentHistory} />
         <Route path={`${url}/coin-management`} component={CoinManagement} />
+        <Route path={`${url}/`} component={Info} />
       </Switch>
+      {/* {children} */}
     </div>
   );
 }

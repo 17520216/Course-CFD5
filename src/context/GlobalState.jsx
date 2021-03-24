@@ -5,7 +5,7 @@ import AppReducer from "./AppReducer";
 const initialState = {
   transactions: [],
   oneTransaction: [],
-  erro: null,
+  error: null,
   loading: true,
   login: false,
   visibleLogin: "none",
@@ -21,34 +21,22 @@ export const GlobalProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AppReducer, initialState);
   //Action
   function showLogin() {
-    try {
-      dispatch({
-        type: "VISIBLE",
-        payload: "flex",
-      });
-    } catch (error) {
-      return;
-    }
+    dispatch({
+      type: "VISIBLE",
+      payload: "flex",
+    });
   }
   function hideLogin() {
-    try {
-      dispatch({
-        type: "VISIBLE",
-        payload: "none",
-      });
-    } catch (error) {
-      return;
-    }
+    dispatch({
+      type: "VISIBLE",
+      payload: "none",
+    });
   }
   function makeLogin() {
-    try {
-      dispatch({
-        type: "MAKE_LOGIN",
-        payload: true,
-      });
-    } catch (error) {
-      return;
-    }
+    dispatch({
+      type: "MAKE_LOGIN",
+      payload: true,
+    });
   }
 
   return (
