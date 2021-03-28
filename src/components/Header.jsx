@@ -51,7 +51,11 @@ export default function Header() {
               </div>
             ) : (
               <div className="not-login bg-none">
-                <NavLink to="/" onClick={showLogin} class="btn-register">
+                <NavLink
+                  to="/profile"
+                  onClick={showLogin}
+                  className="btn-register"
+                >
                   Đăng nhập
                 </NavLink>
                 <NavLink

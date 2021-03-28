@@ -1,13 +1,27 @@
 import Head from "./components/Head";
 import Register from "./components/Register";
-
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 export default function RegisterPage() {
+  let { slug } = useParams();
+  const [state, setState] = useState("");
+  console.log(slug);
+  useEffect(() => {
+    fetch(`http://cfd-reactjs.herokuapp.com/elearning/v4/course/${slug}`)
+      .then((res) => res.json())
+      .then((res) => {
+        setState({
+          ...res.data,
+        });
+      });
+  }, []);
+
   return (
     <main className="register-course" id="main">
       <section>
         <div className="container">
           <div className="wrap container">
-            <Head />
+            <Head title={state.title} />
             <Register />
           </div>
         </div>

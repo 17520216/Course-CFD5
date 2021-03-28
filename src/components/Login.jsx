@@ -1,50 +1,62 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import ReactDOM from "react-dom";
 import { GlobalContext } from "../context/GlobalState";
+import useFormValidate from "../core/ReactHook/useFormValidate";
 export default function Login() {
-  const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   const { visibleLogin } = useContext(GlobalContext);
   const { makeLogin, hideLogin } = useContext(GlobalContext);
-  const [form, setForm] = useState({
-    password: "",
-    phone: "",
-    email: "",
-    checked: false,
-  });
-  const [err, setErr] = useState({
-    password: "",
-    phone: "",
-    email: "",
-    checked: false,
-  });
-  const inputChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
-  };
-  const onSubmit = (e) => {
-    const err = {};
-    // /^\s+$/.test(form.email) || form.email === ""
-    //   ? (err.email = "Please fill your email")
-    //   : (err.email = null);
-    !re.test(form.email)
-      ? (err.email = "Please match the requested format")
-      : (err.email = null);
-    if (form.password === "nguyenan") {
-      err.password = "";
-    } else {
-      err.password = "Please Try Again";
-    }
-    if (err.email === null && err.password === "") {
-      makeLogin();
-      hideLogin();
-    }
 
-    setErr(err);
-    console.log(err);
-    console.log("sendForm", form);
-  };
+  const {
+    form,
+    inputChange,
+    onSubmit,
+    error,
+    setForm,
+    status,
+    setStatus,
+  } = useFormValidate(
+    {
+      email: "",
+      phone: "",
+      password: "",
+      checked: false,
+    },
+    {
+      rule: {
+        email: {
+          required: true,
+          pattern: "email",
+        },
+        password: {
+          required: true,
+          pattern: "password",
+        },
+      },
+      message: {
+        email: {
+          required: "please fill your email",
+        },
+        password: {
+          pattern:
+            "Use 8 or more characters and combine letters, numbers, and symbols",
+        },
+      },
+      option: {
+        localStorage: "register-info",
+      },
+    }
+  );
+
+  useEffect(() => {
+    if (status === "success") {
+      hideLogin();
+      makeLogin();
+    }
+    return () => {
+      setStatus("Fail");
+    };
+  }, [status]);
+
   return ReactDOM.createPortal(
     <>
       <div className="popup-form popup-login" style={{ display: visibleLogin }}>
@@ -52,52 +64,32 @@ export default function Login() {
           {/* login-form */}
           <div className="ct_login" style={{ display: "block" }}>
             <h2 className="title">Đăng nhập</h2>
-            {err.email ? (
-              <>
-                <input
-                  name="email"
-                  style={{ border: "1px solid #e55d5d", marginBottom: 0 }}
-                  value={form.email}
-                  onChange={inputChange}
-                  type="text"
-                  placeholder="Email / Số điện thoại"
-                />
-                <p style={{ marginBottom: 15, color: "#e55d5d" }}>
-                  {err.email}
-                </p>
-              </>
-            ) : (
+            <>
               <input
                 name="email"
+                className={error?.name ? "login-error" : ""}
                 value={form.email}
                 onChange={inputChange}
                 type="text"
                 placeholder="Email / Số điện thoại"
               />
-            )}
-            {!err.password ? (
+              <p style={{ marginBottom: 15, color: "#e55d5d" }}>
+                {error?.email}
+              </p>
+            </>
+            <>
               <input
                 name="password"
+                className={error?.password ? "login-error" : ""}
                 value={form.password}
                 onChange={inputChange}
                 type="password"
                 placeholder="Mật khẩu"
               />
-            ) : (
-              <>
-                <input
-                  name="password"
-                  style={{ border: "1px solid #e55d5d", marginBottom: 0 }}
-                  value={form.password}
-                  onChange={inputChange}
-                  type="password"
-                  placeholder="Mật khẩu"
-                />
-                <p style={{ marginBottom: 15, color: "#e55d5d" }}>
-                  {err.password}
-                </p>
-              </>
-            )}
+              <p style={{ marginBottom: 15, color: "#e55d5d" }}>
+                {error?.password}
+              </p>
+            </>
             <div className="remember">
               <label className="btn-remember">
                 <div>

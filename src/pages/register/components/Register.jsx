@@ -1,74 +1,7 @@
 import { useState } from "react";
 import useFormValidate from "../../../core/ReactHook/useFormValidate";
 export default function Register() {
-  // const [form, setForm] = useState({
-  //   name: "",
-  //   phone: "",
-  //   email: "",
-  //   urlFace: "",
-  //   coin: false,
-  //   payment: "bank-transfer",
-  //   suggest: "",
-  //   gender: "male",
-  // });
-  // const [err, setErr] = useState({
-  //   name: "",
-  //   phone: "",
-  //   email: "",
-  //   urlFace: "",
-  //   coin: false,
-  //   payment: "bank-transfer",
-  //   suggest: "",
-  //   gender: "male",
-  // });
-  // const resetForm = () => {
-  //   setForm({
-  //     name: "",
-  //     phone: "",
-  //     email: "",
-  //     urlFace: "",
-  //     coin: false,
-  //     payment: "bank-transfer",
-  //     suggest: "",
-  //     gender: "male",
-  //   });
-  // };
-  // const onSubmit = () => {
-  //   const err = {};
-  //   /^\s+$/.test(form.name) || form.name === ""
-  //     ? (err.name = "Please fill your name")
-  //     : (err.name = null);
-  //   form.phone === ""
-  //     ? (err.phone = "Please fill your phone")
-  //     : form.phone.length < 9
-  //     ? (err.phone = "Please match the requested format")
-  //     : form.phone.length > 11
-  //     ? (err.phone = "Please match the requested format")
-  //     : (err.phone = null);
-  //   !/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-  //     form.email
-  //   )
-  //     ? (err.email = "Please match the requested format")
-  //     : (err.email = null);
-  //   setErr(err);
-  //   if (err.name === null && err.phone === null && err.email === null) {
-  //     console.log("sendform:", form);
-  //     resetForm();
-  //   }
-  // };
-  // const inputChange = (e) => {
-  //   setForm({
-  //     ...form,
-  //     [e.target.name]: e.target.value,
-  //   });
-  // };
-  // const handleOption = (e) => {
-  //   setForm({
-  //     ...form,
-  //     payment: e,
-  //   });
-  // };
-  const { form, inputChange, onSubmit, error, handleSetForm } = useFormValidate(
+  const { form, inputChange, onSubmit, error, setForm } = useFormValidate(
     {
       name: "",
       phone: "",
@@ -116,6 +49,19 @@ export default function Register() {
       },
     }
   );
+  function handleSelect(e) {
+    let value = e.target.dataset.value;
+    let name = e.target.dataset.name;
+    let type = e.target.type;
+    if (type === "checkbox") {
+      value = e.target.checked;
+      name = e.target.name;
+    }
+    setForm({
+      ...form,
+      [name]: value,
+    });
+  }
 
   return (
     <div className="form">
@@ -123,106 +69,66 @@ export default function Register() {
         <p>
           Họ và tên<span>*</span>
         </p>
-        {error?.name ? (
-          <div className="text-error">
-            <input
-              style={{ border: "1px solid #e55d5d", width: "100%" }}
-              value={form.name}
-              onChange={inputChange}
-              name="name"
-              type="text"
-              placeholder="Họ và tên bạn"
-            />
-            <p>{error?.name}</p>
-          </div>
-        ) : (
+        <div className="text-error">
           <input
+            className={error?.name ? "error" : ""}
             value={form.name}
             onChange={inputChange}
             name="name"
             type="text"
             placeholder="Họ và tên bạn"
           />
-        )}
+          <p>{error?.name}</p>
+        </div>
       </label>
       <label>
         <p>
           Số điện thoại<span>*</span>
         </p>
-        {error?.phone ? (
-          <div className="text-error">
-            <input
-              style={{ border: "1px solid #e55d5d", width: "100%" }}
-              value={form.phone}
-              onChange={inputChange}
-              name="phone"
-              type="text"
-              placeholder="Your phone"
-            />
-            <p>{error?.phone}</p>
-          </div>
-        ) : (
+        <div className="text-error">
           <input
+            className={error?.phone ? "error" : ""}
             value={form.phone}
             onChange={inputChange}
             name="phone"
             type="text"
             placeholder="Your phone"
           />
-        )}
+          <p>{error?.phone}</p>
+        </div>
       </label>
       <label>
         <p>
           Email<span>*</span>
         </p>
-        {error?.email ? (
-          <div className="text-error">
-            <input
-              style={{ border: "1px solid #e55d5d", width: "100%" }}
-              value={form.email}
-              onChange={inputChange}
-              name="email"
-              type="text"
-              placeholder="Your mail"
-            />
-            <p>{error?.email}</p>
-          </div>
-        ) : (
+        <div className="text-error">
           <input
+            className={error?.email ? "error" : ""}
             value={form.email}
             onChange={inputChange}
             name="email"
             type="text"
             placeholder="Your mail"
           />
-        )}
+          <p>{error?.email}</p>
+        </div>
       </label>
       <label>
         <p>
           URL Facebook<span>*</span>
         </p>
 
-        {error?.urlFace ? (
-          <div className="text-error">
-            <input
-              style={{ border: "1px solid #e55d5d", width: "100%" }}
-              onChange={inputChange}
-              type="text"
-              placeholder="https://facebook.com"
-              value={form.urlFace}
-              name="urlFace"
-            />
-            <p>{error?.urlFace}</p>
-          </div>
-        ) : (
+        <div className="text-error">
           <input
+            className={error?.urlFace ? "error" : ""}
             onChange={inputChange}
             type="text"
             placeholder="https://facebook.com"
             value={form.urlFace}
             name="urlFace"
           />
-        )}
+          <p>{error?.urlFace}</p>
+        </div>
       </label>
       <div style={{ display: "flex" }}>
         <label className="disable">
@@ -260,7 +166,7 @@ export default function Register() {
           Hiện có <strong>300 COIN</strong>
           <input
             name="coin"
-            onChange={handleSetForm}
+            onChange={handleSelect}
             type="checkbox"
             value={form.coin}
             defaultChecked={false}
@@ -274,20 +180,18 @@ export default function Register() {
           <div className="head">Chuyển khoản</div>
           <div className="sub">
             <a
-              onClick={(e) => handleSetForm(e)}
-              onChange={inputChange}
+              onClick={handleSelect}
               href="#"
               data-value="Banker-payment"
-              name="payment"
+              data-name="payment"
             >
               Chuyển khoản
             </a>
             <a
-              onClick={(e) => handleSetForm(e)}
-              onChange={inputChange}
+              onClick={handleSelect}
               href="#"
               data-value="Craft-payment"
-              name="payment"
+              data-name="payment"
             >
               Thanh toán tiền mặt
             </a>

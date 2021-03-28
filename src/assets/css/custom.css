@@ -8,6 +8,13 @@
 .text-error {
   width: 72%;
 }
+.text-error input {
+  width: 100% !important;
+}
+.text-error .error {
+  border: 1px solid #e55d5d !important;
+  width: 100%;
+}
 .text-error p {
   color: #e55d5d;
   width: 100% !important;
@@ -37,4 +44,8 @@
 .message .hide {
   transition-duration: 0.3s;
   left: 100%;
+}
+.login-error {
+  border: "1px solid #e55d5d";
+  margin-bottom: 0;
 }

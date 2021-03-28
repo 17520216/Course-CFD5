@@ -1,9 +1,9 @@
-export default function Head() {
+export default function Head({ title }) {
   return (
     <>
       {" "}
       <div className="main-sub-title">ĐĂNG KÝ</div>
-      <h1 className="main-title">Thực chiến front-end căn bản </h1>
+      <h1 className="main-title">{title}</h1>
       <div className="main-info">
         <div className="date">
           <strong>Khai giảng:</strong> 15/11/2020

@@ -1,63 +1,52 @@
 import React, { useRef, useState } from "react";
+import useFormValidate from "../../core/ReactHook/useFormValidate";
 import "../../assets/css/custom.css";
 import Head from "../project/component/Head";
 export default React.forwardRef(function CoopPage(props, ref) {
-  const [form, setForm] = useState({
-    name: "",
-    phone: "",
-    email: "",
-    website: "",
-    title: "",
-    content: "",
-  });
-  const [err, setErr] = useState({
-    name: "",
-    phone: "",
-    email: "",
-    website: "",
-    title: "",
-    content: "",
-  });
-  const resetForm = () => {
-    setForm({
+  const { form, inputChange, onSubmit, error } = useFormValidate(
+    {
       name: "",
       phone: "",
       email: "",
       website: "",
       title: "",
       content: "",
-    });
-  };
-  const onSubmit = () => {
-    const err = {};
-    /^\s+$/.test(form.name) || form.name === ""
-      ? (err.name = "Please fill your name")
-      : (err.name = null);
-    form.phone === ""
-      ? (err.phone = "Please fill your phone")
-      : form.phone.length < 9
-      ? (err.phone = "Please match the requested format")
-      : form.phone.length > 11
-      ? (err.phone = "Please match the requested format")
-      : (err.phone = null);
-    !/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-      form.email
-    )
-      ? (err.email = "Please match the requested format")
-      : (err.email = null);
-    setErr(err);
-    if (err.name === null && err.phone === null && err.email === null) {
-      resetForm();
+    },
+    {
+      rule: {
+        name: {
+          required: true,
+          pattern: "name",
+        },
+        email: {
+          required: true,
+          pattern: "email",
+        },
+        phone: {
+          required: true,
+          pattern: "phone",
+        },
+        website: {
+          pattern: "urlWeb",
+        },
+      },
+      message: {
+        name: {
+          required: "please fill your name",
+        },
+        email: {
+          required: "please fill your email",
+        },
+        phone: {
+          required: "please fill your phone",
+        },
+      },
+      option: {
+        localStorage: "register-info",
+      },
     }
+  );
 
-    console.log("sendform:", form);
-  };
-  const inputChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
-  };
   return (
     <>
       <main className="register-course" id="main">
@@ -71,89 +60,64 @@ export default React.forwardRef(function CoopPage(props, ref) {
               <p>
                 Họ và tên<span>*</span>
               </p>
-              {err.name ? (
-                <div className="text-error">
-                  <input
-                    style={{ border: "1px solid #e55d5d", width: "100%" }}
-                    value={form.name}
-                    onChange={inputChange}
-                    name="name"
-                    type="text"
-                    placeholder="Họ và tên bạn"
-                  />
-                  <p>{err.name}</p>
-                </div>
-              ) : (
+              <div className="text-error">
                 <input
+                  className={error?.name ? "error" : ""}
                   value={form.name}
                   onChange={inputChange}
                   name="name"
                   type="text"
                   placeholder="Họ và tên bạn"
                 />
-              )}
+                <p>{error?.name}</p>
+              </div>
             </label>
             <label>
               <p>
                 Số điện thoại<span>*</span>
               </p>
-              {err.phone ? (
-                <div className="text-error">
-                  <input
-                    style={{ border: "1px solid #e55d5d", width: "100%" }}
-                    value={form.phone}
-                    onChange={inputChange}
-                    name="phone"
-                    type="text"
-                    placeholder="Your phone"
-                  />
-                  <p>{err.phone}</p>
-                </div>
-              ) : (
+              <div className="text-error">
                 <input
-                  value={form.phone}
+                  className={error?.phone ? "error" : ""}
+                  value={form?.phone}
                   onChange={inputChange}
                   name="phone"
                   type="text"
                   placeholder="Your phone"
                 />
-              )}
+                <p>{error?.phone}</p>
+              </div>
             </label>
             <label>
               <p>
                 Email<span>*</span>
               </p>
-              {err.email ? (
-                <div className="text-error">
-                  <input
-                    style={{ border: "1px solid #e55d5d", width: "100%" }}
-                    value={form.email}
-                    onChange={inputChange}
-                    name="email"
-                    type="text"
-                    placeholder="Your mail"
-                  />
-                  <p>{err.email}</p>
-                </div>
-              ) : (
+
+              <div className="text-error">
                 <input
+                  className={error?.email ? "error" : ""}
                   value={form.email}
                   onChange={inputChange}
                   name="email"
                   type="text"
                   placeholder="Your mail"
                 />
-              )}
+                <p>{error?.email}</p>
+              </div>
             </label>
             <label>
               <p>Website</p>
-              <input
-                onChange={inputChange}
-                name="website"
-                value={form.website}
-                type="text"
-                placeholder="Đường dẫn website http://"
-              />
+              <div className="text-error">
+                <input
+                  onChange={inputChange}
+                  className={error?.website ? "error" : ""}
+                  name="website"
+                  value={form.website}
+                  type="text"
+                  placeholder="Đường dẫn website http://"
+                />
+                <p>{error?.website}</p>
+              </div>
             </label>
             <label>
               <p>

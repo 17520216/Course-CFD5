@@ -4,7 +4,6 @@ export default function MessageForm({ message, handleClose }) {
   handleClose = () => {
     setVisible(!visible);
   };
-  console.log(visible);
   return (
     <>
       {visible ? (

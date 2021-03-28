@@ -1,22 +1,32 @@
-export default function Course({ name, des, status, img, coach, img_coach }) {
+import { Link } from "react-router-dom";
+
+export default function Course({
+  title,
+  short_description,
+  course_status,
+  thumbnail,
+  teacher,
+  id,
+  slug,
+}) {
   return (
     <>
       <div className="col-md-4 course">
         <div className="wrap">
-          <a className="cover" href="#">
-            <img src={img} alt="" />
-            {status === "dang_dien_ra" ? (
-              <span className="badge b1">Đang Diễn Ra</span>
-            ) : status === "da_ket_thuc" ? (
+          <Link className="cover" to={`/course/${slug}`}>
+            <img src={thumbnail?.link} alt="" />
+            {course_status === "sap-khai-gian" ? (
+              <span className="badge b1">Sắp khai giảng</span>
+            ) : course_status === "da_ket_thuc" ? (
               <span className="badge b2">Đã kết thúc</span>
             ) : (
-              <span className="badge b3">Sắp Khai Giảng</span>
+              <span className="badge b3">Đang diễn ra</span>
             )}
             <div className="hover">
               <div className="top">
                 <div className="user">
                   <img src="/img/icon-user-white.svg" alt="" />
-                  12
+                  {id}
                 </div>
                 <div className="heart">
                   <img src="/img/icon-heart.svg" alt="" /> 100
@@ -26,21 +36,23 @@ export default function Course({ name, des, status, img, coach, img_coach }) {
                 <img src="/img/icon-viewmore.svg" alt="" />
               </div>
             </div>
-          </a>
-          <div className="info">
-            <a className="name" href="#">
-              {name}
-            </a>
-            <p className="des">{des}</p>
+          </Link>
+          <div className="info" to={`/course/${slug}`}>
+            <Link className="name" href="#">
+              {title}
+            </Link>
+            <p className="des">{short_description}</p>
           </div>
           <div className="bottom">
             <div className="teacher">
               <div className="avatar">
-                <img src={img_coach} alt="" />
+                <img src={teacher?.avatar?.link} alt="" />
               </div>
-              <div className="name">{coach}</div>
+              <div className="name">{teacher?.title}</div>
             </div>
-            <div className="register-btn">Đăng Ký</div>
+            <Link className="register-btn" to={`/register/${slug}`}>
+              Đăng Ký
+            </Link>
           </div>
         </div>
       </div>

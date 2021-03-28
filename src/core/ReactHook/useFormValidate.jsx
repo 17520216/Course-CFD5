@@ -3,6 +3,8 @@ const patternEmail = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/i;
 const patternPhone = /(84|0[3|5|7|8|9])+([0-9]{8})\b/;
 const patternName = /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/i;
 const patternFbUrl = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/;
+const patternWebUrl = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/;
+const patternPassWord = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{8,10}$/;
 
 export default function useFormValidate(initialValue, validate) {
   const { option } = validate;
@@ -14,6 +16,7 @@ export default function useFormValidate(initialValue, validate) {
   }
 
   const [form, setForm] = useState(value);
+  const [status, setStatus] = useState("Fail");
   const [error, setError] = useState();
   const inputChange = (e) => {
     setForm({
@@ -30,7 +33,6 @@ export default function useFormValidate(initialValue, validate) {
       localStorage.removeItem(option.localStorage);
     };
   }, [form]);
-  console.log(option);
   const onSubmit = () => {
     const { rule, message } = validate;
     const err = {};
@@ -39,10 +41,10 @@ export default function useFormValidate(initialValue, validate) {
       if (r.required) {
         if (!form[i] || /^\s+$/.test(form[i])) {
           err[i] = message?.[i]?.required || "please fill something";
-          continue; // s cho nay nó k work cho url face
+          continue;
         }
       }
-      if (r.pattern) {
+      if (r.pattern && form[i]) {
         let pattern = r.pattern;
         if (pattern === "email") {
           pattern = patternEmail;
@@ -55,43 +57,35 @@ export default function useFormValidate(initialValue, validate) {
         }
         if (pattern === "urlFace") {
           pattern = patternFbUrl;
-          console.log(pattern);
+        }
+        if (pattern === "urlWeb") {
+          pattern = patternWebUrl;
+        }
+        if (pattern === "password") {
+          pattern = patternPassWord;
         }
         if (!pattern.test(form[i])) {
+          console.log(message[i]?.pattern);
           err[i] =
-            message?.[i]?.required?.pattern ||
-            "Please fill match the format requested";
+            message?.[i]?.pattern || "Please fill match the format requested";
         }
       }
     }
-
+    if (Object.keys(err).length === 0) {
+      console.log(form);
+      setStatus("success");
+      setForm(initialValue);
+    }
     setError(err);
-    console.log(form);
   };
-  function handleSetForm(e) {
-    if (e.target.name === "gender") {
-      setForm({
-        ...form,
-        [e.target.name]: e.target.value,
-      });
-    }
-    if (e.target.name === "payment") {
-      console.log(e.target.attributes[1].textContent);
-      setForm({
-        ...form,
-        [e.target.name]: e.target.attributes[1].textContent,
-      }); //hoi lai anh Vuong
-    }
-    setForm({
-      ...form,
-      [e.target.name]: e.target.checked,
-    });
-  }
+
   return {
-    handleSetForm,
     form,
+    setForm,
     inputChange,
     onSubmit,
     error,
+    status,
+    setStatus,
   };
 }

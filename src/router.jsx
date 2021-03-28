@@ -36,7 +36,7 @@ const routers = [
         component: Team,
       },
       {
-        path: "/course",
+        path: "/courses",
         component: CoursePage,
       },
       {
@@ -67,7 +67,7 @@ const routers = [
         ],
       },
       {
-        path: "/course-detail",
+        path: "/course/:slug/",
         component: CourseDetail,
       },
       {
@@ -80,7 +80,7 @@ const routers = [
       },
 
       {
-        path: "/register",
+        path: "/register/:slug/",
         component: RegisterPage,
       },
       {

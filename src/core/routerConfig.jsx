@@ -21,7 +21,6 @@ export default function renderRouter(routers, parentPath = "") {
         path = parentPath + "/" + path;
         path = path.replace(/\/+/g, "/");
         let children = null;
-        console.log("path", path);
         if (childRouters) {
           children = renderRouter(childRouters);
         }
