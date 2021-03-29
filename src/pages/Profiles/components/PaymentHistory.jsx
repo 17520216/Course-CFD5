@@ -1,4 +1,17 @@
+import { useEffect, useState } from "react";
+import userApi from "../../../api/userApi";
 export default function PaymentHisory() {
+  const [state, setState] = useState();
+  //Hỏi anh Vương chỗ này
+  // useEffect(async () => {
+  //   const res = await userApi.getProfilePayment();
+  //   if (res) {
+  //     console.log("payment", res);
+  //   }
+  // }, [state]);
+  // if (!state) return "Loading....";
+  // console.log("data", state.data);
+
   return (
     <div className="tab4">
       <YourCourseLearnt

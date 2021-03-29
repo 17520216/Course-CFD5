@@ -1,5 +1,6 @@
 import { useState, useContext, useEffect } from "react";
 import ReactDOM from "react-dom";
+import "../assets/css/custom.css";
 import { GlobalContext } from "../context/GlobalState";
 import useFormValidate from "../core/ReactHook/useFormValidate";
 import userApi from "../api/userApi";
@@ -138,8 +139,8 @@ export default function Login() {
                 Google
               </div>
             </div>
-            <div className="close">
-              <img src="img/close-icon.png" alt="" />
+            <div className="close" onClick={hideLogin}>
+              <img src="/img/close-icon.png" alt="" />
             </div>
           </div>
           {/* username form */}
@@ -148,7 +149,7 @@ export default function Login() {
             <input type="text" placeholder="username" />
             <div className="btn rect main btn-next">Tiếp theo</div>
             <div className="back" />
-            <div className="close">
+            <div className="/close" onClick={hideLogin}>
               <img src="img/close-icon.png" alt="" />
             </div>
           </div>

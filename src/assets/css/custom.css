@@ -46,6 +46,6 @@
   left: 100%;
 }
 .login-error {
-  border: "1px solid #e55d5d";
+  border: "1px solid #e55d5d" !important;
   margin-bottom: 0;
 }

@@ -19,8 +19,6 @@ export default function Home() {
   };
   let dataLocal = JSON.parse(localStorage.getItem("localHome"));
   let [state, setState] = useState(dataLocal || initialValue);
-  let { slug } = useParams();
-  console.log(slug);
   useEffect(async () => {
     let res = await userApi.getDataHome();
 

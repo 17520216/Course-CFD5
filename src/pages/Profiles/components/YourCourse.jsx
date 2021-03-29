@@ -1,24 +1,30 @@
+import userApi from "../../../api/userApi";
+import { useEffect, useState } from "react";
 export default function YourCourse() {
+  const [course, setCourse] = useState();
+  // const [state, setState] = useState();
+  //Hỏi anh Vương chỗ này
+  useEffect(async () => {
+    const res = await userApi.getProfileCourse();
+    if (res) {
+      setCourse(res);
+    }
+  }, []);
+  if (!course) return "Loading....";
   return (
     <div className="tab2">
-      <Course
-        img_course="/img/img3.png"
-        name="Frontend cơ bản"
-        date="30/4/2021"
-        time="54 giờ"
-        NoVideo="29 video"
-        students="30 học viên"
-        rating="40"
-      />
-      <Course
-        img_course="/img/img7.png"
-        name="Frontend nâng cao"
-        date="3/10/2021"
-        time="24 giờ"
-        NoVideo="21 video"
-        students="20 học viên"
-        rating="40"
-      />
+      {course.data.map((e, i) => (
+        <Course
+          key={i}
+          img_course={e.course.thumbnail.link}
+          name={e.course.title}
+          date={e.course.opening_time}
+          NoVideo={e.course.count_video}
+          time="20 hours"
+          students="30 học viên"
+          rating="40"
+        />
+      ))}
     </div>
   );
 }

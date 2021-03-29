@@ -7,7 +7,6 @@ import { Switch, Route, useRouteMatch } from "react-router-dom";
 
 export default function TabContent({ children }) {
   const { url } = useRouteMatch();
-  console.log(children);
 
   return (
     <div className="tab-content">

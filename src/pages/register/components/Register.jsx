@@ -1,6 +1,29 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import $ from "jquery";
 import useFormValidate from "../../../core/ReactHook/useFormValidate";
 export default function Register() {
+  function handleOpen() {
+    $(".select .sub ").css({ display: "block" });
+    handleClose();
+  }
+
+  function handleClose() {
+    let text = $(".select .sub a");
+    text.each(function () {
+      $(this).click(function () {
+        let textCurrent = $(this).html();
+        $(".select .head").text(textCurrent);
+        $(".select .sub").fadeOut(200);
+      });
+    });
+  }
+  // $(".select .sub a").on("click", function (e) {
+  //   e.preventDefault();
+  //   let value = $(this).text();
+  //   $(this).closest(".select").find(".head").text(value);
+  //
+  // });
+
   const { form, inputChange, onSubmit, error, setForm } = useFormValidate(
     {
       name: "",
@@ -50,6 +73,7 @@ export default function Register() {
     }
   );
   function handleSelect(e) {
+    e.preventDefault();
     let value = e.target.dataset.value;
     let name = e.target.dataset.name;
     let type = e.target.type;
@@ -177,7 +201,9 @@ export default function Register() {
       <label>
         <p>Hình thức thanh toán</p>
         <div className="select">
-          <div className="head">Chuyển khoản</div>
+          <div className="head" onClick={handleOpen}>
+            Chuyển khoản
+          </div>
           <div className="sub">
             <a
               onClick={handleSelect}

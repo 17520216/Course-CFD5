@@ -71,11 +71,11 @@ export default function useFormValidate(initialValue, validate) {
         }
       }
     }
-    // if (Object.keys(err).length === 0) {
-    //   console.log(form);
-    //   setStatus("success");
-    //   setForm(initialValue);
-    // }
+    if (Object.keys(err).length === 0) {
+      console.log(form);
+      // setStatus("success");
+      setForm(initialValue);
+    }
     setError(err);
     return err;
   };

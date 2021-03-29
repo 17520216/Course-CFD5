@@ -5,7 +5,6 @@ import { useParams } from "react-router-dom";
 export default function RegisterPage() {
   let { slug } = useParams();
   const [state, setState] = useState("");
-  console.log(slug);
   useEffect(() => {
     fetch(`http://cfd-reactjs.herokuapp.com/elearning/v4/course/${slug}`)
       .then((res) => res.json())
