@@ -53,7 +53,7 @@ export default function Terminal({ review, loading }) {
           <div className="testimonial-item">
             <div className="item">
               <div className="text">
-                {review.map((e, i) => (
+                {review?.map((e, i) => (
                   <div
                     className={`ct ct-1 ${current === i ? "active" : ""}`}
                     key={i}
@@ -79,7 +79,7 @@ export default function Terminal({ review, loading }) {
               </div>
               <div className="images">
                 <div className="list" ref={ref}>
-                  {review.map((e, i) => (
+                  {review?.map((e, i) => (
                     <div className="carousel-cell active">
                       <div key={i} className="img ">
                         <picture>

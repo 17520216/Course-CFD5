@@ -1,3 +1,4 @@
+import { numberWithCommas } from "../../../utils/format";
 export default function Banner({ title, money, count_video, opening_time }) {
   return (
     <section className="banner style2" style={{ background: "#d0f9ff" }}>
@@ -21,11 +22,11 @@ export default function Banner({ title, money, count_video, opening_time }) {
         <div className="container">
           <div className="video">
             <div className="icon">
-              <img src="img/play-icon-white.png" alt="" />
+              <img src="/img/play-icon-white.png" alt="" />
             </div>{" "}
             <span>giới thiệu</span>
           </div>
-          <div className="money">{money}VND</div>
+          <div className="money">{numberWithCommas(money)}VND</div>
         </div>
       </div>
     </section>

@@ -1,19 +1,28 @@
 import "../assets/css/custom.css";
 import { NavLink, Link } from "react-router-dom";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { GlobalContext } from "../context/GlobalState";
 
 export default function Header() {
-  const { login, showLogin } = useContext(GlobalContext);
+  const { login, showLogin, dataUser, makeLogout } = useContext(GlobalContext);
+  // const [state, setState] = useState({ ...dataUser });
+  // console.log("header", state);
   function openMenu() {
     document.body.classList.toggle("menu-is-show");
   }
   function closeMenu() {
     document.body.classList.remove("menu-is-show");
   }
+
   // const setShowLogin = () => {
   //   showLogin();
   // };
+
+  // useEffect(() => {
+  //   setState({
+  //     ...dataUser,
+  //   });
+  // }, [dataUser]);
 
   return (
     <>
@@ -36,17 +45,22 @@ export default function Header() {
               <div className="have-login">
                 <div className="account">
                   <a href="#" className="info">
-                    <div className="name">Trần Lê Trọng Nghĩa</div>
+                    <div className="name">{dataUser?.name}</div>
                     <div className="avatar">
-                      <img src="/img/avt.png" alt="" />
+                      <img
+                        src={dataUser?.avatar || "/img/logo192.png"}
+                        alt=""
+                      />
                     </div>
                   </a>
                 </div>
                 <div className="hamberger"></div>
                 <div className="sub">
-                  <NavLink to="/course">Khóa học của tôi</NavLink>
+                  <NavLink to="/courses">Khóa học của tôi</NavLink>
                   <NavLink to="/profile">Thông tin tài khoản</NavLink>
-                  <NavLink to="/">Đăng xuất</NavLink>
+                  <NavLink onClick={makeLogout} to="/">
+                    Đăng xuất
+                  </NavLink>
                 </div>
               </div>
             ) : (
@@ -83,7 +97,7 @@ export default function Header() {
             </NavLink>
           </li>
           <li>
-            <NavLink onClick={closeMenu} to="/course">
+            <NavLink onClick={closeMenu} to="/courses">
               Khóa Học
             </NavLink>
           </li>

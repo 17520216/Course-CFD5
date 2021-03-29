@@ -12,7 +12,7 @@ export default function CourseList({ online, offline }) {
             <h2 className="main-title">Khoá Học online</h2>
           </div>
           <div className="list row">
-            {online.map((e) => (
+            {online?.map((e) => (
               <Course key={e._id} {...e} />
             ))}
           </div>
@@ -24,7 +24,7 @@ export default function CourseList({ online, offline }) {
             <h2 className="main-title">Khoá Học offline</h2>
           </div>
           <div className="list row">
-            {offline.map((e) => (
+            {offline?.map((e) => (
               <Course key={e._id} {...e} />
             ))}
           </div>

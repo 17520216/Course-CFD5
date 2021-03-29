@@ -7,9 +7,20 @@ export default (state, action) => {
       };
     }
     case "MAKE_LOGIN": {
+      localStorage.setItem("tokenUser", JSON.stringify(action.payload.token));
+      localStorage.setItem("dataUser", JSON.stringify(action.payload));
+      localStorage.setItem("localLogin", JSON.stringify(true));
       return {
         ...state,
-        login: action.payload,
+        login: true,
+        dataUser: action.payload,
+      };
+    }
+    case "MAKE_LOGOUT": {
+      localStorage.clear();
+      return {
+        ...state,
+        login: false,
       };
     }
 

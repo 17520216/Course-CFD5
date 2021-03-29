@@ -7,7 +7,7 @@ const patternWebUrl = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]
 const patternPassWord = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{8,10}$/;
 
 export default function useFormValidate(initialValue, validate) {
-  const { option } = validate;
+  let { option } = validate;
   if (!option) option = {};
   let value = initialValue;
   if (option.localStorage) {
@@ -46,7 +46,7 @@ export default function useFormValidate(initialValue, validate) {
       }
       if (r.pattern && form[i]) {
         let pattern = r.pattern;
-        if (pattern === "email") {
+        if (pattern === "email" || pattern === "username") {
           pattern = patternEmail;
         }
         if (pattern === "phone") {
@@ -71,19 +71,20 @@ export default function useFormValidate(initialValue, validate) {
         }
       }
     }
-    if (Object.keys(err).length === 0) {
-      console.log(form);
-      setStatus("success");
-      setForm(initialValue);
-    }
+    // if (Object.keys(err).length === 0) {
+    //   console.log(form);
+    //   setStatus("success");
+    //   setForm(initialValue);
+    // }
     setError(err);
+    return err;
   };
 
   return {
     form,
     setForm,
-    inputChange,
     onSubmit,
+    inputChange,
     error,
     status,
     setStatus,

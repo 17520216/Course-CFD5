@@ -56,7 +56,7 @@ export default function Gallery({ gallery, loading }) {
         <h2 className="main-title">Chúng ta là một team</h2>
       </div>
       <div className="list" ref={ref}>
-        {gallery.map((e, i) => (
+        {gallery?.map((e, i) => (
           <img key={i} data-flickity-lazyload={e} alt="" />
         ))}
         {/* <img data-flickity-lazyload="/img/gallery/cfd-team-1.jpg" alt="" />

@@ -7,26 +7,29 @@ import Action from "./components/Action";
 import PopUpVideo from "../../components/PopUpVideo";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import userApi from "../../api/userApi";
 
 export default function Home() {
-  let [state, setState] = useState({
+  const initialValue = {
     online: [],
     offline: [],
     loading: true,
     review: [],
     gallery: {},
-  });
+  };
+  let dataLocal = JSON.parse(localStorage.getItem("localHome"));
+  let [state, setState] = useState(dataLocal || initialValue);
   let { slug } = useParams();
   console.log(slug);
-  useEffect(() => {
-    fetch("http://cfd-reactjs.herokuapp.com/elearning/v4/home")
-      .then((res) => res.json())
-      .then((res) =>
-        setState({
-          ...res,
-          loading: false,
-        })
-      );
+  useEffect(async () => {
+    let res = await userApi.getDataHome();
+
+    localStorage.setItem("localHome", JSON.stringify(res));
+
+    setState({
+      ...res,
+      loading: false,
+    });
   }, []);
   if (state.loading) return "...Loading";
 

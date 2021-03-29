@@ -2,43 +2,44 @@ import { useState, useContext, useEffect } from "react";
 import ReactDOM from "react-dom";
 import { GlobalContext } from "../context/GlobalState";
 import useFormValidate from "../core/ReactHook/useFormValidate";
+import userApi from "../api/userApi";
 export default function Login() {
   const { visibleLogin } = useContext(GlobalContext);
   const { makeLogin, hideLogin } = useContext(GlobalContext);
+  const [data, setData] = useState();
 
   const {
     form,
     inputChange,
-    onSubmit,
     error,
     setForm,
+    onSubmit,
     status,
     setStatus,
   } = useFormValidate(
     {
-      email: "",
-      phone: "",
+      username: "",
       password: "",
-      checked: false,
+      // checked: false,
     },
     {
       rule: {
-        email: {
+        username: {
           required: true,
-          pattern: "email",
+          pattern: "username",
         },
         password: {
           required: true,
-          pattern: "password",
+          // pattern: "password",
         },
       },
       message: {
-        email: {
-          required: "please fill your email",
+        username: {
+          required: "please fill your username",
         },
         password: {
-          pattern:
-            "Use 8 or more characters and combine letters, numbers, and symbols",
+          // pattern:
+          //   "Use 8 or more characters and combine letters, numbers, and symbols",
         },
       },
       option: {
@@ -47,15 +48,31 @@ export default function Login() {
     }
   );
 
-  useEffect(() => {
-    if (status === "success") {
-      hideLogin();
-      makeLogin();
+  // useEffect(() => {
+  //   if (status === "success") {
+  //     hideLogin();
+  //     makeLogin();
+  //   }
+  //   return () => {
+  //     setStatus("Fail");
+  //   };
+  // }, [status]);
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    let err = onSubmit();
+    if (Object.keys(err).length === 0) {
+      let res = await userApi.login(form);
+
+      setData({
+        ...res,
+      });
+      if (res?.data) {
+        makeLogin(res.data);
+        hideLogin();
+      }
     }
-    return () => {
-      setStatus("Fail");
-    };
-  }, [status]);
+  }
 
   return ReactDOM.createPortal(
     <>
@@ -64,17 +81,18 @@ export default function Login() {
           {/* login-form */}
           <div className="ct_login" style={{ display: "block" }}>
             <h2 className="title">Đăng nhập</h2>
+            {data?.error ? <h2 style={{ color: "red" }}>{data.error}</h2> : ""}
             <>
               <input
-                name="email"
+                name="username"
                 className={error?.name ? "login-error" : ""}
-                value={form.email}
+                value={form.username}
                 onChange={inputChange}
                 type="text"
-                placeholder="Email / Số điện thoại"
+                placeholder="username / Số điện thoại"
               />
               <p style={{ marginBottom: 15, color: "#e55d5d" }}>
-                {error?.email}
+                {error?.username}
               </p>
             </>
             <>
@@ -108,7 +126,7 @@ export default function Login() {
                 Quên mật khẩu?
               </a>
             </div>
-            <div className="btn rect main btn-login" onClick={onSubmit}>
+            <div className="btn rect main btn-login" onClick={handleSubmit}>
               đăng nhập
             </div>
             <div className="text-register" style={{}}>
@@ -124,10 +142,10 @@ export default function Login() {
               <img src="img/close-icon.png" alt="" />
             </div>
           </div>
-          {/* email form */}
-          <div className="ct_email">
+          {/* username form */}
+          <div className="ct_username">
             <h2 className="title">Đặt lại mật khẩu</h2>
-            <input type="text" placeholder="Email" />
+            <input type="text" placeholder="username" />
             <div className="btn rect main btn-next">Tiếp theo</div>
             <div className="back" />
             <div className="close">

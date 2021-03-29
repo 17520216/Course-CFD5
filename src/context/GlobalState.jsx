@@ -3,12 +3,11 @@ import AppReducer from "./AppReducer";
 
 //InitialState
 const initialState = {
-  transactions: [],
-  oneTransaction: [],
   error: null,
   loading: true,
   login: false,
   visibleLogin: "none",
+  dataUser: "",
 };
 
 // Create Context
@@ -18,6 +17,9 @@ export const GlobalContext = createContext(initialState);
 // Provider Component
 
 export const GlobalProvider = ({ children }) => {
+  let dataLocal = JSON.parse(localStorage.getItem("dataUser"));
+  let dataLogin = JSON.parse(localStorage.getItem("localLogin"));
+
   const [state, dispatch] = useReducer(AppReducer, initialState);
   //Action
   function showLogin() {
@@ -32,21 +34,28 @@ export const GlobalProvider = ({ children }) => {
       payload: "none",
     });
   }
-  function makeLogin() {
+  function makeLogin(data) {
     dispatch({
       type: "MAKE_LOGIN",
-      payload: true,
+      payload: data,
+    });
+  }
+  function makeLogout() {
+    dispatch({
+      type: "MAKE_LOGOUT",
     });
   }
 
   return (
     <GlobalContext.Provider
       value={{
-        login: state.login,
+        dataUser: dataLocal || state.dataUser,
+        login: dataLogin || state.login,
         visibleLogin: state.visibleLogin,
         showLogin,
         makeLogin,
         hideLogin,
+        makeLogout,
       }}
     >
       {children}
