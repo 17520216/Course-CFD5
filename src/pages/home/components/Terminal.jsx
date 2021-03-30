@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import $ from "jquery";
 export default function Terminal({ review, loading }) {
   const ref = useRef();
   const [current, setCurrent] = useState(0);

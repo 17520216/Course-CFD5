@@ -7,6 +7,7 @@ const patternWebUrl = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]
 const patternPassWord = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{8,10}$/;
 
 export default function useFormValidate(initialValue, validate) {
+  let { checkPass } = validate;
   let { option } = validate;
   if (!option) option = {};
   let value = initialValue;
@@ -71,10 +72,14 @@ export default function useFormValidate(initialValue, validate) {
         }
       }
     }
+
     if (Object.keys(err).length === 0) {
-      console.log(form);
-      // setStatus("success");
+      // console.log(form);
+      // // setStatus("success");
       setForm(initialValue);
+      if (checkPass) {
+        sessionStorage.setItem("passWord", JSON.stringify(form));
+      }
     }
     setError(err);
     return err;
