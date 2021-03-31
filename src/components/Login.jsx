@@ -46,7 +46,7 @@ export default function Login() {
       option: {
         localStorage: "register-info",
       },
-      checkPass: true,
+      checkPass: false,
     }
   );
 
@@ -150,9 +150,9 @@ export default function Login() {
             <input type="text" placeholder="username" />
             <div className="btn rect main btn-next">Tiếp theo</div>
             <div className="back" />
-            <div className="/close" onClick={hideLogin}>
+            {/* <div className="/close" onClick={hideLogin}>
               <img src="img/close-icon.png" alt="" />
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

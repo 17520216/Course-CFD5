@@ -1,5 +1,6 @@
 import userApi from "../../../api/userApi";
 import { useEffect, useState } from "react";
+import ReactLoading from "react-loading";
 export default function YourCourse() {
   const [course, setCourse] = useState();
   // const [state, setState] = useState();
@@ -10,7 +11,8 @@ export default function YourCourse() {
       setCourse(res);
     }
   }, []);
-  if (!course) return "Loading....";
+  if (!course)
+    return <ReactLoading type="cylon" color="#00afab" height={30} width={55} />;
   return (
     <div className="tab2">
       {course.data.map((e, i) => (

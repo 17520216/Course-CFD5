@@ -38,6 +38,7 @@ export default function Info() {
       // },
     }
   );
+  console.log("dataUser", dataUser);
 
   async function handleSubmit(e) {
     e.preventDefault();

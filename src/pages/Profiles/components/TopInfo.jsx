@@ -1,8 +1,10 @@
 import { GlobalContext } from "../../../context/GlobalState";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
+import Loading from "../../../components/Loading";
 
 export default function TopInfo() {
   const { dataUser } = useContext(GlobalContext);
+
   return (
     <div className="top-info">
       <div className="avatar">

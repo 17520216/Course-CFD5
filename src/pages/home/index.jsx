@@ -8,6 +8,7 @@ import PopUpVideo from "../../components/PopUpVideo";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import userApi from "../../api/userApi";
+import Loading from "../../components/Loading";
 
 export default function Home() {
   const initialValue = {
@@ -29,7 +30,7 @@ export default function Home() {
       loading: false,
     });
   }, []);
-  if (state.loading) return "...Loading";
+  if (state.loading) return <Loading />;
 
   return (
     <main className="homepage" id="main">

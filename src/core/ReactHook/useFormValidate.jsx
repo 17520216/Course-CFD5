@@ -7,7 +7,6 @@ const patternWebUrl = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]
 const patternPassWord = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{8,10}$/;
 
 export default function useFormValidate(initialValue, validate) {
-  let { checkPass } = validate;
   let { option } = validate;
   if (!option) option = {};
   let value = initialValue;
@@ -17,12 +16,26 @@ export default function useFormValidate(initialValue, validate) {
   }
 
   const [form, setForm] = useState(value);
-  const [status, setStatus] = useState("Fail");
+
+  //Hỏi lại chỗ này và chỗ loading!
+
+  // if (form?.password) {
+  //   let pass = JSON.parse(sessionStorage.getItem("password")) || "";
+  //   setForm({
+  //     ...form,
+  //     password: pass?.password,
+  //   });
+  // }
+
   const [error, setError] = useState();
   const inputChange = (e) => {
+    let key = e.target.name;
+    if (e.target.name === "urlFace") {
+      key = "fb";
+    }
     setForm({
       ...form,
-      [e.target.name]: e.target.value,
+      [key]: e.target.value,
     });
   };
 
@@ -75,9 +88,9 @@ export default function useFormValidate(initialValue, validate) {
 
     if (Object.keys(err).length === 0) {
       // console.log(form);
-      // // setStatus("success");
-      setForm(initialValue);
-      if (checkPass) {
+      // setForm(initialValue);
+
+      if (form?.checked) {
         sessionStorage.setItem("passWord", JSON.stringify(form));
       }
     }
@@ -91,7 +104,5 @@ export default function useFormValidate(initialValue, validate) {
     onSubmit,
     inputChange,
     error,
-    status,
-    setStatus,
   };
 }

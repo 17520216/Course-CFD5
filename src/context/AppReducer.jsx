@@ -23,6 +23,12 @@ export default (state, action) => {
         login: false,
       };
     }
+    // case "LOADING": {
+    //   return {
+    //     ...state,
+    //     loading: false,
+    //   };
+    // }
 
     default:
       return state;

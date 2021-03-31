@@ -22,12 +22,25 @@ export const GlobalProvider = ({ children }) => {
 
   const [state, dispatch] = useReducer(AppReducer, initialState);
   //Action
+
+  // function handleLoading() {
+  //   dispatch({
+  //     type: "LOADING",
+  //   });
+  // }
+
   function showLogin() {
     dispatch({
       type: "VISIBLE",
       payload: "flex",
     });
   }
+  // function setLoading(loading) {
+  //   dispatch({
+  //     type: "LOADING",
+  //     payload: loading,
+  //   });
+  // }
   function hideLogin() {
     dispatch({
       type: "VISIBLE",
@@ -56,6 +69,7 @@ export const GlobalProvider = ({ children }) => {
         makeLogin,
         hideLogin,
         makeLogout,
+        loading: state.loading,
       }}
     >
       {children}

@@ -1,3 +1,5 @@
+import { GlobalContext } from "../context/GlobalState";
+
 export default {
   //   login: (form) => {
   //     fetch("http://cfd-reactjs.herokuapp.com/elearning/v4/login", {

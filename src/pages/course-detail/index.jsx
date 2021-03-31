@@ -4,6 +4,7 @@ import Request from "./components/Request";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import Course from "../../components/Course";
+import Loading from "../../components/Loading";
 
 export default function CourseDetail() {
   const { slug } = useParams();
@@ -29,7 +30,7 @@ export default function CourseDetail() {
       })
     );
   }, [slug]);
-  if (!state.course) return "...Loading";
+  if (!state.course) return <Loading />;
   function handleClick(i) {
     setState({
       ...state,
