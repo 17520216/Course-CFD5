@@ -14,6 +14,7 @@ export default (state, action) => {
         ...state,
         login: true,
         dataUser: action.payload,
+        loading: false,
       };
     }
     case "MAKE_LOGOUT": {
@@ -23,12 +24,12 @@ export default (state, action) => {
         login: false,
       };
     }
-    // case "LOADING": {
-    //   return {
-    //     ...state,
-    //     loading: false,
-    //   };
-    // }
+    case "LOADING": {
+      return {
+        ...state,
+        loading: true,
+      };
+    }
 
     default:
       return state;

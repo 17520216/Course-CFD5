@@ -1,10 +1,9 @@
 import userApi from "../../../api/userApi";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import ReactLoading from "react-loading";
 export default function YourCourse() {
   const [course, setCourse] = useState();
   // const [state, setState] = useState();
-  //Hỏi anh Vương chỗ này
   useEffect(async () => {
     const res = await userApi.getProfileCourse();
     if (res) {
@@ -13,6 +12,17 @@ export default function YourCourse() {
   }, []);
   if (!course)
     return <ReactLoading type="cylon" color="#00afab" height={30} width={55} />;
+
+  let today = new Date();
+  console.log("today", Date.parse(today));
+  let startDay = course.data[1].course.opening_time;
+  let spendTime = Date.parse(today) - Date.parse(startDay);
+  console.log("spendTime", spendTime);
+
+  let n = today.getMonth();
+  console.log(n);
+
+  console.log("date", Date.parse(startDay));
   return (
     <div className="tab2">
       {course.data.map((e, i) => (

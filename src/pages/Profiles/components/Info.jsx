@@ -2,7 +2,10 @@ import useFormValidate from "../../../core/ReactHook/useFormValidate";
 import { useContext } from "react";
 import { GlobalContext } from "../../../context/GlobalState";
 import userApi from "../../../api/userApi";
+import Loading from "../../../components/Loading";
 export default function Info() {
+  const { loading, setLoading } = useContext(GlobalContext);
+  console.log("loading", loading);
   let { dataUser, makeLogin } = useContext(GlobalContext);
   const { form, inputChange, onSubmit, error, setForm } = useFormValidate(
     {
@@ -12,7 +15,7 @@ export default function Info() {
       rule: {
         name: {
           required: true,
-          // pattern: "name",
+          pattern: "name",
         },
         phone: {
           required: true,
@@ -38,12 +41,12 @@ export default function Info() {
       // },
     }
   );
-  console.log("dataUser", dataUser);
 
   async function handleSubmit(e) {
     e.preventDefault();
     let err = onSubmit();
     if (Object.keys(err).length === 0) {
+      setLoading();
       let res = await userApi.updateInfo(form);
       if (res?.data) {
         makeLogin(res.data);
@@ -51,6 +54,7 @@ export default function Info() {
     }
   }
 
+  if (loading) return <Loading />;
   return (
     <div className="tab1">
       <label>

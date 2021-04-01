@@ -4,7 +4,7 @@ import AppReducer from "./AppReducer";
 //InitialState
 const initialState = {
   error: null,
-  loading: true,
+  loading: false,
   login: false,
   visibleLogin: "none",
   dataUser: "",
@@ -53,6 +53,12 @@ export const GlobalProvider = ({ children }) => {
       payload: data,
     });
   }
+  function setLoading() {
+    dispatch({
+      type: "LOADING",
+    });
+  }
+
   function makeLogout() {
     dispatch({
       type: "MAKE_LOGOUT",
@@ -69,6 +75,7 @@ export const GlobalProvider = ({ children }) => {
         makeLogin,
         hideLogin,
         makeLogout,
+        setLoading,
         loading: state.loading,
       }}
     >
