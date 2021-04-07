@@ -1,9 +1,8 @@
-import { useContext } from "react";
-import { GlobalContext } from "../context/GlobalState";
 import { Route, Redirect } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export default function PrivateRouter(props) {
-  const { login } = useContext(GlobalContext);
+  const { login } = useSelector((state) => state.user);
 
   return login ? <Route {...props} /> : <Redirect to="/" />;
 }

@@ -1,12 +1,14 @@
 import useFormValidate from "../../../core/ReactHook/useFormValidate";
-import { useContext } from "react";
-import { GlobalContext } from "../../../context/GlobalState";
-import userApi from "../../../api/userApi";
 import Loading from "../../../components/Loading";
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { updateData, setLoading } from "../../../redux/action/user";
 export default function Info() {
-  const { loading, setLoading } = useContext(GlobalContext);
-  console.log("loading", loading);
-  let { dataUser, makeLogin } = useContext(GlobalContext);
+  const { dataUser, loading } = useSelector((state) => state.user);
+
+  const [load, setLoad] = useState(false);
+  const dispatch = useDispatch();
   const { form, inputChange, onSubmit, error, setForm } = useFormValidate(
     {
       ...dataUser,
@@ -42,19 +44,16 @@ export default function Info() {
     }
   );
 
-  async function handleSubmit(e) {
+  function handleSubmit(e) {
     e.preventDefault();
     let err = onSubmit();
     if (Object.keys(err).length === 0) {
-      setLoading();
-      let res = await userApi.updateInfo(form);
-      if (res?.data) {
-        makeLogin(res.data);
-      }
+      dispatch(setLoading(true));
+      dispatch(updateData(form));
     }
   }
-
   if (loading) return <Loading />;
+
   return (
     <div className="tab1">
       <label>

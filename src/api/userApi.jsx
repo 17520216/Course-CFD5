@@ -1,13 +1,4 @@
-import { GlobalContext } from "../context/GlobalState";
-
 export default {
-  //   login: (form) => {
-  //     fetch("http://cfd-reactjs.herokuapp.com/elearning/v4/login", {
-  //       method: "POST",
-  //       body: JSON.stringify(form),
-  //       "Content-Type": "application/json",
-  //     }).then((res) => res.json());
-  //   },
   login: (data) => {
     return fetch("http://cfd-reactjs.herokuapp.com/elearning/v4/login", {
       method: "POST",

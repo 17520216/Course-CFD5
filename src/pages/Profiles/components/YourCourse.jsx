@@ -1,34 +1,26 @@
 import userApi from "../../../api/userApi";
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import ReactLoading from "react-loading";
+import { fetchCourse } from "../../../redux/action/user";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 export default function YourCourse() {
-  const [course, setCourse] = useState();
-  // const [state, setState] = useState();
-  useEffect(async () => {
-    const res = await userApi.getProfileCourse();
-    if (res) {
-      setCourse(res);
-    }
+  const dispatch = useDispatch();
+
+  const { course } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    dispatch(fetchCourse());
   }, []);
   if (!course)
     return <ReactLoading type="cylon" color="#00afab" height={30} width={55} />;
 
-  let today = new Date();
-  console.log("today", Date.parse(today));
-  let startDay = course.data[1].course.opening_time;
-  let spendTime = Date.parse(today) - Date.parse(startDay);
-  console.log("spendTime", spendTime);
-
-  let n = today.getMonth();
-  console.log(n);
-
-  console.log("date", Date.parse(startDay));
   return (
     <div className="tab2">
-      {course.data.map((e, i) => (
+      {course?.map((e, i) => (
         <Course
           key={i}
-          img_course={e.course.thumbnail.link}
+          img_course={e.course.thumbnail?.link}
           name={e.course.title}
           date={e.course.opening_time}
           NoVideo={e.course.count_video}

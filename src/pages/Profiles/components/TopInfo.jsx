@@ -1,9 +1,7 @@
-import { GlobalContext } from "../../../context/GlobalState";
-import { useContext, useEffect } from "react";
-import Loading from "../../../components/Loading";
+import { useSelector } from "react-redux";
 
 export default function TopInfo() {
-  const { dataUser } = useContext(GlobalContext);
+  const { dataUser } = useSelector((state) => state.user);
 
   return (
     <div className="top-info">

@@ -1,15 +1,17 @@
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 
 import routers from "./router";
 import renderRouter from "./core/routerConfig";
-import { GlobalProvider } from "./context/GlobalState";
+import AppProvider from "./core/GlobalState";
+
+import reducers from "./redux/reducers";
+import mySaga from "./redux/saga";
 
 function App() {
   return (
-    <GlobalProvider>
-      <Router>{renderRouter(routers)}</Router>
-    </GlobalProvider>
+    <AppProvider appSaga={mySaga} reducers={reducers}>
+      {renderRouter(routers)}
+    </AppProvider>
   );
 }
 export default App;

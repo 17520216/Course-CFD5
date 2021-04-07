@@ -16,6 +16,7 @@ import Info from "./pages/Profiles/components/Info";
 import PaymentHistory from "./pages/Profiles/components/PaymentHistory";
 import CoinManagement from "./pages/Profiles/components/CoinManagement";
 import Course from "./pages/Profiles/components/Course";
+import TestCount from "./pages/count/countTest";
 
 const routers = [
   {
@@ -65,6 +66,11 @@ const routers = [
             component: Info,
           },
         ],
+      },
+      {
+        path: "/test",
+        component: TestCount,
+        exact: true,
       },
       {
         path: "/course/:slug/",

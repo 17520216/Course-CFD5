@@ -1,12 +1,11 @@
 import TopInfo from "./components/TopInfo";
 import TabTitle from "./components/TabTitle";
 import TabContent from "./components/TabContent";
-import { useContext } from "react";
-import { GlobalContext } from "../../context/GlobalState";
 import { Redirect } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export default function Profile({ children }) {
-  const { login } = useContext(GlobalContext);
+  const { login } = useSelector((state) => state.user);
   return (
     <>
       {!login ? (

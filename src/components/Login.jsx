@@ -1,27 +1,20 @@
-import { useState, useContext, useEffect } from "react";
 import ReactDOM from "react-dom";
 import "../assets/css/custom.css";
-import { GlobalContext } from "../context/GlobalState";
 import useFormValidate from "../core/ReactHook/useFormValidate";
-import userApi from "../api/userApi";
+import { useSelector } from "react-redux";
+import { showLogin, fetchLogin, setLoading } from "../redux/action/user";
+import { useDispatch } from "react-redux";
+import Loading from "./Loading";
 export default function Login() {
-  const { visibleLogin } = useContext(GlobalContext);
-  const { makeLogin, hideLogin } = useContext(GlobalContext);
-  const [data, setData] = useState();
+  const { loginErr, popupLogin, loading } = useSelector((state) => state.user);
 
-  const {
-    form,
-    inputChange,
-    error,
-    setForm,
-    onSubmit,
-    status,
-    setStatus,
-  } = useFormValidate(
+  const dispatch = useDispatch();
+
+  const { form, inputChange, error, setForm, onSubmit } = useFormValidate(
     {
       username: "",
       password: "",
-      // checked: false,
+      checked: false,
     },
     {
       rule: {
@@ -50,40 +43,27 @@ export default function Login() {
     }
   );
 
-  // useEffect(() => {
-  //   if (status === "success") {
-  //     hideLogin();
-  //     makeLogin();
-  //   }
-  //   return () => {
-  //     setStatus("Fail");
-  //   };
-  // }, [status]);
-
   async function handleSubmit(e) {
     e.preventDefault();
     let err = onSubmit();
     if (Object.keys(err).length === 0) {
-      let res = await userApi.login(form);
-
-      setData({
-        ...res,
-      });
-      if (res?.data) {
-        makeLogin(res.data);
-        hideLogin();
-      }
+      dispatch(setLoading(true));
+      dispatch(fetchLogin(form));
     }
   }
 
+  if (loading) return <Loading />;
   return ReactDOM.createPortal(
     <>
-      <div className="popup-form popup-login" style={{ display: visibleLogin }}>
+      <div
+        className="popup-form popup-login"
+        style={{ display: popupLogin ? "flex" : "none" }}
+      >
         <div className="wrap">
           {/* login-form */}
           <div className="ct_login" style={{ display: "block" }}>
             <h2 className="title">Đăng nhập</h2>
-            {data?.error ? <h2 style={{ color: "red" }}>{data.error}</h2> : ""}
+            {loginErr ? <h2 style={{ color: "red" }}>{loginErr}</h2> : ""}
             <>
               <input
                 name="username"
@@ -140,7 +120,7 @@ export default function Login() {
                 Google
               </div>
             </div>
-            <div className="close" onClick={hideLogin}>
+            <div className="close" onClick={() => dispatch(showLogin(false))}>
               <img src="/img/close-icon.png" alt="" />
             </div>
           </div>
